@@ -1,4 +1,5 @@
 #include <RcppArmadillo.h>
+
 // [[Rcpp::depends(RcppArmadillo)]]
 
 using namespace std;
@@ -7,8 +8,8 @@ using namespace arma;
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-List graphical_horseshoe_map_Cpp(const mat& X, double t_alpha = 1.0, double t_beta = 1.0, 
-                                 double tol = 1e-4, int max_iter = 200, const string& diff_type = "relative",
+List graphical_horseshoe_map_Cpp(const arma::mat& X, double t_alpha = 1.0, double t_beta = 1.0, 
+                                 double tol = 1e-4, int max_iter = 200, const std::string& diff_type = "relative",
                                  int verbose = 1, bool alt_kappa = true, double fixed_tau = 0) {
     auto start_time = high_resolution_clock::now();
     int iter = 1;
@@ -126,6 +127,6 @@ List graphical_horseshoe_map_Cpp(const mat& X, double t_alpha = 1.0, double t_be
     }
     List results = List::create(_["Sigma_est"] = Sigma, _["Omega_est"] = Omega, _["Theta"] = theta,
                                 _["Kappa"] = kappa, _["Taus"] = tau_sqs, _["diffs"] = diffs,
-                                _["iters"] = iter - 1, _["tot_time"] = elap_time);
+                                _["iters"] = iter - 1, _["tot_time"] = elap_time/1000000);
     return results;
 }

@@ -11,55 +11,28 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _GHSGEM_rcpparma_hello_world() {
+// graphical_horseshoe_map_Cpp
+List graphical_horseshoe_map_Cpp(const arma::mat& X, double t_alpha, double t_beta, double tol, int max_iter, const std::string& diff_type, int verbose, bool alt_kappa, double fixed_tau);
+RcppExport SEXP _GHSGEM_graphical_horseshoe_map_Cpp(SEXP XSEXP, SEXP t_alphaSEXP, SEXP t_betaSEXP, SEXP tolSEXP, SEXP max_iterSEXP, SEXP diff_typeSEXP, SEXP verboseSEXP, SEXP alt_kappaSEXP, SEXP fixed_tauSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _GHSGEM_rcpparma_outerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _GHSGEM_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _GHSGEM_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< double >::type t_alpha(t_alphaSEXP);
+    Rcpp::traits::input_parameter< double >::type t_beta(t_betaSEXP);
+    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type diff_type(diff_typeSEXP);
+    Rcpp::traits::input_parameter< int >::type verbose(verboseSEXP);
+    Rcpp::traits::input_parameter< bool >::type alt_kappa(alt_kappaSEXP);
+    Rcpp::traits::input_parameter< double >::type fixed_tau(fixed_tauSEXP);
+    rcpp_result_gen = Rcpp::wrap(graphical_horseshoe_map_Cpp(X, t_alpha, t_beta, tol, max_iter, diff_type, verbose, alt_kappa, fixed_tau));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_GHSGEM_rcpparma_hello_world", (DL_FUNC) &_GHSGEM_rcpparma_hello_world, 0},
-    {"_GHSGEM_rcpparma_outerproduct", (DL_FUNC) &_GHSGEM_rcpparma_outerproduct, 1},
-    {"_GHSGEM_rcpparma_innerproduct", (DL_FUNC) &_GHSGEM_rcpparma_innerproduct, 1},
-    {"_GHSGEM_rcpparma_bothproducts", (DL_FUNC) &_GHSGEM_rcpparma_bothproducts, 1},
+    {"_GHSGEM_graphical_horseshoe_map_Cpp", (DL_FUNC) &_GHSGEM_graphical_horseshoe_map_Cpp, 9},
     {NULL, NULL, 0}
 };
 
