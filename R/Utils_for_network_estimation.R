@@ -1,7 +1,7 @@
 stein_loss <- function(m1, m2){
   n <- nrow(m1)
   P <- chol2inv(chol(m2)) %*% m1
-  return(sum(diag(P)) - determinant(map$Sigma_est)$modulus[1] - n)
+  return(sum(diag(P)) - determinant(P)$modulus[1] - n)
 }
 
 conf_matrix <- function(truth, estimation, margins = FALSE, normalize = FALSE,
