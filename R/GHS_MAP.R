@@ -1,0 +1,147 @@
+graphical_horseshoe_map <- function(X, fixed_tau = 0, tol = 1e-4, max_iter = 500,
+                                    diff_type = "relative", save_lambdas_and_nus = FALSE,
+                                    initial_values = NULL, verbose = 1) {
+  start_time <- Sys.time()
+  iter <- diff <- 1
+  n <- nrow(X)
+  p <- ncol(X)
+  S <- t(X) %*% X
+  diffs <- rep(NA, max_iter)
+  if (save_lambdas_and_nus) {
+    lambdas <- nus <- array(dim = c(p, p, max_iter))
+  }
+  ind_noi_all <- matrix(0, nrow = p - 1, ncol = p)
+  for (i in 1:p) {
+    if (i == 1) 
+      ind_noi <- t(2:p)
+    else if (i == p) 
+      ind_noi <- t(1:(p - 1))
+    else
+      ind_noi <- t(c(1:(i - 1), (i + 1):(p)))
+    ind_noi_all[, i] <- ind_noi
+  }
+  if (!is.null(initial_values)) {
+    if (any(names(initial_values) == "Omega")) {
+      if (matrixcalc::is.positive.semi.definite(initial_values$Omega) &
+          all(dim(initial_values$Omega) == c(p,p))) {
+        Omega <- Omega_last_iter <- initial_values$Omega
+      }
+      else {
+        cat("Initial value for Omega is not positive-semi-definite matrix or wrong dimensions!\nContinue using identity matrix.\n")
+        Omega <- Omega_last_iter <- diag(p)
+      }
+    }
+    else {
+      cat("Omega does not found in the initial values! Continue using identity matrix.\n")
+      Omega <- Omega_last_iter <- diag(p)
+    }
+    if (any(names(initial_values) == "Sigma")) {
+      if (matrixcalc::is.positive.definite(initial_values$Sigma) &
+          all(dim(initial_values$Sigma) == c(p,p))) {
+        Sigma <- initial_values$Sigma
+      }
+      else {
+        cat("Initial value for Sigma is not positive-definite matrix or wrong dimensions!\nContinue using identity matrix.\n")
+        Sigma <- diag(p)
+      }
+    }
+    else {
+      cat("Sigma does not found in the initial values! Continue using identity matrix.\n")
+      Sigma <- diag(p)
+    }
+  }
+  else {
+    Omega <- Omega_last_iter <- diag(p)
+    Sigma <- diag(p)
+  }
+  Lambda_sq <- Nu <- matrix(1, p, p)
+  tau_sq <- fixed_tau
+  while (diff > tol & iter <= max_iter) {
+    for (i in 1:p) {
+      # Extract matrix blocks into own variables.
+      ind_noi <- ind_noi_all[, i]
+      Sigma_11 <- Sigma[ind_noi, ind_noi]
+      Sigma_12 <- Sigma[ind_noi, i]
+      Sigma_22 <- Sigma[i, i]
+      lambda_sq_12 <- Lambda_sq[ind_noi, i]
+      nu_12 <- Nu[ind_noi, i]
+      s_12 <- S[ind_noi, i]
+      s_22 <- S[i, i]
+      # Calculate gamma, omega_12, omega_22, lambda_12^2 and nu_12.
+      gamma <- (n / 2 + 1) / (s_22 / 2)                # Use Mode instead of Mean. (n / 2 + 1) / (s_22 / 2)
+      Omega_11_inv <- Sigma_11 - Sigma_12 %*% t(Sigma_12) / Sigma_22
+      C_inv <- s_22 * Omega_11_inv + diag(1 / (lambda_sq_12 * tau_sq))
+      beta <- -solve(C_inv, s_12)                  # Same as -C %*% s_12
+      omega_12 <- beta
+      omega_22 <- gamma + t(beta) %*% Omega_11_inv %*% beta
+      lambda_scale <- 1 / nu_12 + omega_12^2 / (2 * tau_sq)
+      lambda_sq_12 <- lambda_scale / 2             # Use Mode instead of Mean.
+      nu_scale <- 1 + 1 / lambda_sq_12
+      nu_12 <- nu_scale / 2                        # Use Mode instead of Mean.
+      # Update Omega, Sigma, Lambda^2 and Nu matrices.
+      Omega[i, i] <- omega_22
+      Omega[i, ind_noi] <- omega_12
+      Omega[ind_noi, i] <- omega_12
+      Omega_inv_temp <- Omega_11_inv %*% beta
+      Sigma[ind_noi, ind_noi] <- Omega_11_inv + Omega_inv_temp %*% t(Omega_inv_temp) / gamma
+      Sigma_12 <- -Omega_inv_temp / gamma
+      Sigma[ind_noi, i] <- Sigma_12
+      Sigma[i, ind_noi] <- Sigma_12
+      Sigma[i, i] <- 1 / gamma 
+      Lambda_sq[i, ind_noi] <- lambda_sq_12
+      Lambda_sq[ind_noi, i] <- lambda_sq_12
+      Nu[i, ind_noi] <- nu_12
+      Nu[ind_noi, i] <- nu_12
+    }
+    if (diff_type == "relative") {
+      diff <- norm(Omega - Omega_last_iter, type = "F") / norm(Omega_last_iter, type = "F")
+    }
+    else {
+      diff <- norm(Omega - Omega_last_iter, type = "F")
+    }
+    diffs[iter] <- diff
+    if (verbose > 1) {
+      lap_time <- Sys.time()
+      elap_time <- as.numeric(difftime(lap_time, start_time, unit = "s"))
+      cat("Iteration: ", iter, ". Elapsed time: ", round(elap_time, 2), " s. Difference: ",
+          round(diff, 6), "\n", sep = "")
+    }
+    else if (verbose > 0 & iter %% 10 == 0) {
+      lap_time <- Sys.time()
+      elap_time <- as.numeric(difftime(lap_time, start_time, unit = "s"))
+      cat("Iteration: ", iter, ". Elapsed time: ", round(elap_time, 2), " s. Difference: ",
+          round(diff, 6), "\n", sep = "")
+    }
+    Omega_last_iter <- Omega
+    if (save_lambdas_and_nus) {
+      lambdas[,,iter] <- Lambda_sq
+      nus[,,iter] <- Nu
+    }
+    iter <- iter + 1
+  }
+  if (save_lambdas_and_nus) {
+    lambdas <- lambdas[,, 1:(iter-1)]
+    nus <- nus[,, 1:(iter-1)]
+  }
+  diffs <- diffs[(1:iter-1)]
+  
+  kappa <- 1 / (1 + n * tau_sq * Lambda_sq)
+  theta <- 1 - kappa
+  theta[theta >= 0.5] <- 1
+  theta[theta < 0.5] <- 0
+  diag(theta) <- 0
+  if (verbose >= 0) {
+    end_time <- Sys.time()
+    elap_time <- as.numeric(difftime(end_time, start_time, unit = "s"))
+    cat("Total iterations: ", iter - 1, ". Elapsed time: ", round(elap_time, 2),
+        " s. Final difference: ", diff, "\n", sep = "")
+  }
+  if (save_lambdas_and_nus) {
+    return(list(Sigma_est = Sigma, Omega_est = Omega, Theta = theta, Kappa = kappa, Lambdas = lambdas,
+                Tau = tau_sq, Nus = nus, diffs = diffs, iters = iter - 1, tot_time = elap_time))
+  }
+  else {
+    return(list(Sigma_est = Sigma, Omega_est = Omega, Theta = theta, Kappa = kappa,
+                Tau = tau_sq, diffs = diffs, iters = iter - 1, tot_time = elap_time))
+  }
+}

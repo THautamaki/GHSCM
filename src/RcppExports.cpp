@@ -12,27 +12,24 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // graphical_horseshoe_map_Cpp
-List graphical_horseshoe_map_Cpp(const arma::mat& X, double t_alpha, double t_beta, double tol, int max_iter, const std::string& diff_type, int verbose, bool alt_kappa, double fixed_tau);
-RcppExport SEXP _GHSGEM_graphical_horseshoe_map_Cpp(SEXP XSEXP, SEXP t_alphaSEXP, SEXP t_betaSEXP, SEXP tolSEXP, SEXP max_iterSEXP, SEXP diff_typeSEXP, SEXP verboseSEXP, SEXP alt_kappaSEXP, SEXP fixed_tauSEXP) {
+List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau, double tol, int max_iter, const std::string& diff_type, int verbose);
+RcppExport SEXP _GHSGEM_graphical_horseshoe_map_Cpp(SEXP XSEXP, SEXP fixed_tauSEXP, SEXP tolSEXP, SEXP max_iterSEXP, SEXP diff_typeSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
-    Rcpp::traits::input_parameter< double >::type t_alpha(t_alphaSEXP);
-    Rcpp::traits::input_parameter< double >::type t_beta(t_betaSEXP);
+    Rcpp::traits::input_parameter< double >::type fixed_tau(fixed_tauSEXP);
     Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
     Rcpp::traits::input_parameter< int >::type max_iter(max_iterSEXP);
     Rcpp::traits::input_parameter< const std::string& >::type diff_type(diff_typeSEXP);
     Rcpp::traits::input_parameter< int >::type verbose(verboseSEXP);
-    Rcpp::traits::input_parameter< bool >::type alt_kappa(alt_kappaSEXP);
-    Rcpp::traits::input_parameter< double >::type fixed_tau(fixed_tauSEXP);
-    rcpp_result_gen = Rcpp::wrap(graphical_horseshoe_map_Cpp(X, t_alpha, t_beta, tol, max_iter, diff_type, verbose, alt_kappa, fixed_tau));
+    rcpp_result_gen = Rcpp::wrap(graphical_horseshoe_map_Cpp(X, fixed_tau, tol, max_iter, diff_type, verbose));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_GHSGEM_graphical_horseshoe_map_Cpp", (DL_FUNC) &_GHSGEM_graphical_horseshoe_map_Cpp, 9},
+    {"_GHSGEM_graphical_horseshoe_map_Cpp", (DL_FUNC) &_GHSGEM_graphical_horseshoe_map_Cpp, 6},
     {NULL, NULL, 0}
 };
 
