@@ -2,9 +2,8 @@
 # GHSGEM: Generalized expectation-maximization (GEM) algorithm with graphical horseshoe (GHS) prior for network estimation
 
 This R package implements a generalized expectation-maximization
-algorithm with a graphical horseshoe prior for network estimation and
-covariance and precision (inverse of the covariance) matrices
-estimation.
+algorithm with a graphical horseshoe prior for network, covariance
+matrix, and precision matrix (inverse of the covariance) estimation.
 
 ## Installation
 
@@ -41,15 +40,15 @@ set.seed(20250303)
 sim <- huge.generator(n = n, d = p, graph = "scale-free")
 ```
 
-Run GHS GEM algorithm.
+Run the GHS GEM algorithm.
 
 ``` r
 map <- GHS_MAP_estimation(sim$data, verbose = 0)
 ```
 
-    ## Total iterations: 74. Elapsed time: 1.08245 s. Final difference: 9.97717e-05
+    ## Total iterations: 74. Elapsed time: 1.11154 s. Final difference: 9.97717e-05
 
-Calculate and print confusion matrix.
+Calculate and print the confusion matrix.
 
 ``` r
 (cm <- conf_matrix(sim$theta, map$Theta_est))
@@ -59,7 +58,7 @@ Calculate and print confusion matrix.
     ## True P       71       28
     ## True N       13     4838
 
-Calculate and print some performace scores.
+Calculate and print some performance scores.
 
 ``` r
 round(calculate_scores(cm)[, c("MCC", "F1", "TPR", "FDR")], 4)
@@ -68,8 +67,8 @@ round(calculate_scores(cm)[, c("MCC", "F1", "TPR", "FDR")], 4)
     ##      MCC    F1    TPR    FDR
     ## 1 0.7745 0.776 0.7172 0.1548
 
-Plot the true simulated network and estimated network using R package
-`igraph`.
+Plot the true simulated network and estimated network using the R
+package `igraph`.
 
 ``` r
 if(!require("igraph", quietly = TRUE)) {
@@ -86,21 +85,22 @@ true_network <- graph_from_adjacency_matrix(sim$theta, mode = "undirected", diag
 est_network <- graph_from_adjacency_matrix(map$Theta_est, mode = "undirected", diag = F)
 ```
 
-Create coordinates for nodes of the network.
+Create coordinates for the nodes of the network. Use the same node
+placement for both plots.
 
 ``` r
 set.seed(10)
 coords <- layout_with_fr(true_network)
 ```
 
-Finally, plot both true and estimated networks.
+Finally, plot both the true and estimated networks.
 
 ``` r
 par(mfrow = c(1,2), mar = c(0.1, 0.1, 1, 0.1))
-plot(true_network, layout = coords, vertex.label.color = "black", edge.width = 2,
-     vertex.size = 4, vertex.label = NA, main = "True network")
-plot(est_network, layout = coords, vertex.label.color = "black", edge.width = 2,
-     vertex.size = 4, vertex.label = NA, main = "Estimated network")
+plot(true_network, layout = coords, edge.width = 2, vertex.size = 4, vertex.label = NA,
+     main = "True network")
+plot(est_network, layout = coords, edge.width = 2, vertex.size = 4, vertex.label = NA,
+     main = "Estimated network")
 ```
 
 <img src="man/figures/README-network_plots-1.png" width="100%" />
