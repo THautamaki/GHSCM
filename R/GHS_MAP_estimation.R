@@ -1,6 +1,6 @@
 
 GHS_MAP_estimation <- function(X, p0 = 0, tolerance = 1e-4, max_iterations = 500, use_Cpp = TRUE,
-                               save_lambdas_and_nus = FALSE, initial_values = NULL, verbose = 0) {
+                               save_lambdas_and_deltas = FALSE, initial_values = NULL, verbose = 0) {
   n <- nrow(X)
   p <- ncol(X)
   if (p0 == 0) {
@@ -20,7 +20,7 @@ GHS_MAP_estimation <- function(X, p0 = 0, tolerance = 1e-4, max_iterations = 500
   else {
     GHSGEM_est <- graphical_horseshoe_map(X, tol = tolerance, max_iter = max_iterations,
                                           fixed_tau = tau_f, initial_values = initial_values,
-                                          save_lambdas_and_nus = save_lambdas_and_nus,
+                                          save_lambdas_and_deltas = save_lambdas_and_deltas,
                                           verbose = verbose)
   }
   return(GHSGEM_est)

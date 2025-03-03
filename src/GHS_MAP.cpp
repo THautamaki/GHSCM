@@ -25,7 +25,7 @@ List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau = 0, doubl
     mat Omega = eye(p, p);
     mat Omega_last_iter = eye(p, p);
     mat Lambda_sq = ones(p, p);
-    mat Nu = ones(p, p);
+    mat Delta = ones(p, p);
     double tau_sq = fixed_tau;
     
     while (diff > tol && iter <= max_iter) {
@@ -37,10 +37,10 @@ List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau = 0, doubl
             vec Sigma_12 = Sigma(ind_noi, col_vec);
             double Sigma_22 = Sigma(i, i);
             vec lambda_sq_12 = Lambda_sq(ind_noi, col_vec);
-            vec nu_12 = Nu(ind_noi, col_vec);
+            vec delta_12 = Delta(ind_noi, col_vec);
             vec s_12 = S(ind_noi, col_vec);
             double s_22 = S(i, i);
-            // Calculate gamma, omega_12, omega_22, lambda_12^2 and nu_12
+            // Calculate gamma, omega_12, omega_22, lambda_12^2 and delta_12
             double gamma = (n / 2.0 + 1) / (s_22 / 2.0);
             mat Omega_11_inv = Sigma_11 - Sigma_12 * trans(Sigma_12) / Sigma_22;
             mat C_inv = s_22 * Omega_11_inv + diagmat(1.0 / (lambda_sq_12 * tau_sq));
@@ -48,12 +48,12 @@ List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau = 0, doubl
             vec beta = solve(C_inv, -s_12);
             vec omega_12 = beta;
             double omega_22 = as_scalar(gamma + trans(beta) * Omega_11_inv * beta);
-            vec lambda_scale = 1.0 / nu_12 + square(omega_12) / (2 * tau_sq);
+            vec lambda_scale = 1.0 / delta_12 + square(omega_12) / (2 * tau_sq);
             lambda_sq_12 = lambda_scale / 2.0;
-            vec nu_scale = ones(p-1) + 1.0 / lambda_sq_12;
-            nu_12 = nu_scale / 2.0;
+            vec delta_scale = ones(p-1) + 1.0 / lambda_sq_12;
+            delta_12 = delta_scale / 2.0;
 
-            // Update Omega, Sigma, Lambda^2 and Nu
+            // Update Omega, Sigma, Lambda^2 and Delta
             Omega(i, i) = omega_22;
             Omega(col_vec, ind_noi) = trans(omega_12);
             Omega(ind_noi, col_vec) = omega_12;
@@ -67,8 +67,8 @@ List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau = 0, doubl
 
             Lambda_sq(col_vec, ind_noi) = trans(lambda_sq_12);
             Lambda_sq(ind_noi, col_vec) = lambda_sq_12;
-            Nu(col_vec, ind_noi) = trans(nu_12);
-            Nu(ind_noi, col_vec) = nu_12;
+            Delta(col_vec, ind_noi) = trans(delta_12);
+            Delta(ind_noi, col_vec) = delta_12;
         }
         if (diff_type == "relative") {
             diff = norm(Omega - Omega_last_iter, "fro") / norm(Omega_last_iter, "fro");
