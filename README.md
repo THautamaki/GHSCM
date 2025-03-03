@@ -41,15 +41,13 @@ set.seed(20250303)
 sim <- huge.generator(n = n, d = p, graph = "scale-free")
 ```
 
-    ## Generating data from the multivariate normal distribution with the scale-free graph structure....done.
-
 Run GHS GEM algorithm.
 
 ``` r
 map <- GHS_MAP_estimation(sim$data, verbose = 0)
 ```
 
-    ## Total iterations: 74. Elapsed time: 1.07383 s. Final difference: 9.97717e-05
+    ## Total iterations: 74. Elapsed time: 1.08245 s. Final difference: 9.97717e-05
 
 Calculate and print confusion matrix.
 
@@ -77,20 +75,6 @@ Plot the true simulated network and estimated network using R package
 if(!require("igraph", quietly = TRUE)) {
   install.packages("igraph")
 }
-```
-
-    ## 
-    ## Attaching package: 'igraph'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     decompose, spectrum
-
-    ## The following object is masked from 'package:base':
-    ## 
-    ##     union
-
-``` r
 library(igraph)
 ```
 

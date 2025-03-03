@@ -39,7 +39,7 @@ p <- 100  # number of variables
 ```
 
 Generate simulated data using huge.generator.
-```{r}
+```{r, message = FALSE, results = 'hide'}
 set.seed(20250303)
 sim <- huge.generator(n = n, d = p, graph = "scale-free")
 ```
@@ -60,7 +60,7 @@ round(calculate_scores(cm)[, c("MCC", "F1", "TPR", "FDR")], 4)
 ```
 
 Plot the true simulated network and estimated network using R package `igraph`.
-```{r}
+```{r, message = FALSE}
 if(!require("igraph", quietly = TRUE)) {
   install.packages("igraph")
 }
@@ -80,7 +80,7 @@ coords <- layout_with_fr(true_network)
 ```
 
 Finally, plot both true and estimated networks.
-```{r network_plots, fig.dpi = 200}
+```{r network_plots, fig.dpi = 300}
 par(mfrow = c(1,2), mar = c(0.1, 0.1, 1, 0.1))
 plot(true_network, layout = coords, vertex.label.color = "black", edge.width = 2,
      vertex.size = 4, vertex.label = NA, main = "True network")
