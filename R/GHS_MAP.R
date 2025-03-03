@@ -150,11 +150,11 @@ graphical_horseshoe_map <- function(X, fixed_tau = 0, tol = 1e-4, max_iter = 500
         " s. Final difference: ", diff, "\n", sep = "")
   }
   if (save_lambdas_and_deltas) {
-    return(list(Sigma_est = Sigma, Omega_est = Omega, Theta = theta, Kappa = kappa, Lambdas = lambdas,
-                Tau = tau_sq, Deltas = deltas, diffs = diffs, iters = iter - 1, tot_time = elap_time))
+    return(list(Sigma_est = Sigma, Omega_est = Omega, Theta_est = theta, Kappa = kappa, Lambdas = lambdas,
+                tau = tau_sq, Deltas = deltas, diffs = diffs, iters = iter - 1, tot_time = elap_time))
   }
   else {
-    return(list(Sigma_est = Sigma, Omega_est = Omega, Theta = theta, Kappa = kappa,
-                Tau = tau_sq, diffs = diffs, iters = iter - 1, tot_time = elap_time))
+    return(list(Sigma_est = Sigma, Omega_est = Omega, Theta_est = theta, Kappa = kappa,
+                tau = tau_sq, diffs = diffs, iters = iter - 1, tot_time = elap_time))
   }
 }
