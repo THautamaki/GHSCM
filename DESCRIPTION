@@ -3,8 +3,8 @@ Type: Package
 Title: The GEM algorithm with a graphical horseshoe prior for network estimation
 Version: 1.0
 Date: 2024-11-29
-Author: Tuomas Hautamäki
-Maintainer: Tuomas Hautamäki <tuomas.hautamaki@oulu.fi>
+Author: Tuomas Hautamaki
+Maintainer: Tuomas Hautamaki <tuomas.hautamaki@oulu.fi>
 Description: This R package implements a generalized expectation-maximization algorithm with a graphical horseshoe prior for network, covariance matrix, and precision matrix (inverse of the covariance) estimation.
 License: GPL (>= 3)
 Encoding: UTF-8
