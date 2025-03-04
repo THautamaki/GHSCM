@@ -5,9 +5,7 @@ Version: 1.0
 Date: 2024-11-29
 Author: Tuomas Hautamäki
 Maintainer: Tuomas Hautamäki <tuomas.hautamaki@oulu.fi>
-Description: This R package implements a generalized expectation-maximization algorithm with a 
-  graphical horseshoe prior for network, covariance matrix, and precision matrix (inverse of the
-  covariance) estimation.
+Description: This R package implements a generalized expectation-maximization algorithm with a graphical horseshoe prior for network, covariance matrix, and precision matrix (inverse of the covariance) estimation.
 License: GPL (>= 3)
 Encoding: UTF-8
 Imports: Rcpp (>= 1.0.13), matrixcalc
