@@ -106,7 +106,7 @@ List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau = 0, doubl
         Rcout << "Total iterations: " << iter - 1 << ". Elapsed time: " << elap_time/1000000 << " s. Final difference: " << diff << endl;
     }
     List results = List::create(_["Sigma_est"] = Sigma, _["Omega_est"] = Omega, _["Theta_est"] = theta,
-                                _["Kappa"] = kappa, _["Tau"] = tau_sq, _["diffs"] = diffs,
+                                _["Kappa"] = kappa, _["tau"] = tau_sq, _["diffs"] = diffs,
                                 _["iters"] = iter - 1, _["tot_time"] = elap_time/1000000);
     return results;
 }
