@@ -1,23 +1,68 @@
-stein_loss <- function(m1, m2){
-  n <- nrow(m1)
-  P <- chol2inv(chol(m2)) %*% m1
-  return(sum(diag(P)) - determinant(P)$modulus[1] - n)
+#' Steins' loss
+#'
+#' This function calculates Stein's loss between true and estimated positive-definite matrices,
+#' which equals two times the Kullback-Leibler divergence, and is defined as follows:
+#' \deqn{tr(\widehat{\mathbf{M}}\mathbf{M}^{-1}) - \log |\widehat{\mathbf{M}}\mathbf{M}^{-1}| - p}
+#' 
+#' @param true_matrix The true \code{p} by \code{p} covariance or precision matrix.
+#' @param est_matrix The estimate of the \code{p} by \code{p} covariance or precision matrix.
+#'
+#' @return Scalar, which is calculated Stein's loss between two matrices.
+#' @export
+#'
+#' @examples
+#' m1 <- matrix(c(1,0,0,1), 2, 2)
+#' m2 <- matrix(c(0.8, 0, 0, 0.8), 2, 2)
+#' stein_loss(m1, m2)
+stein_loss <- function(true_matrix, est_matrix){
+  p <- nrow(true_matrix)
+  P <- est_matrix %*% chol2inv(chol(true_matrix))
+  return(sum(diag(P)) - determinant(P)$modulus[1] - p)
 }
 
-conf_matrix <- function(truth, estimation, margins = FALSE, normalize = FALSE,
+#' Confusion matrix for network estimation
+#' 
+#' Construct confusion matrix using the true adjacency and estimated adjacency matrices of
+#' the network. Can be used both directed and undirected networks.
+#'
+#' @param true_adj The true \code{p} by \code{p} adjacency matrix of the network.
+#' @param est_adj The estimated \code{p} by \code{p} adjacency matrix of the network.
+#' @param margins Boolean, add marginal sums if \code{TRUE}. The default value is \code{FALSE}.
+#' @param normalize Boolean, use normalized values (proportions) instead of absolute values if
+#'   \code{TRUE}. The default value is \code{FALSE}.
+#' @param undirected Boolean, if \code{TRUE} (default) assumes that the adjacency matrices are
+#'   symmetric.
+#'
+#' @return A data frame, which size depends if marginal sums are displayed or not. The default size
+#'  is 2 by 2, and if marginal sums added, then 3 by 3.
+#' @export
+#'
+#' @examples
+#' true_adj <- matrix(c(0, 0, 1, 0, 0,
+#'                      0, 0, 1, 1, 0,
+#'                      1, 1, 0, 0, 0,
+#'                      0, 1, 0, 0, 1,
+#'                      0, 0, 0, 1, 0), 5, 5)
+#' est_adj <- matrix(c(0, 1, 1, 0, 0,
+#'                     1, 0, 0, 1, 0,
+#'                     1, 0, 0, 0, 1,
+#'                     0, 1, 0, 0, 1,
+#'                     0, 0, 1, 1, 0), 5, 5)
+#' conf_matrix(true_adj, est_adj)
+conf_matrix <- function(true_adj, est_adj, margins = FALSE, normalize = FALSE,
                         undirected = TRUE) {
-  same_edges <- truth * estimation
-  diff <- truth - estimation
-  summ <- truth + estimation
-  p <- dim(truth)[1]
+  same_edges <- true_adj * est_adj
+  diff <- true_adj - est_adj
+  summ <- true_adj + est_adj
+  p <- dim(true_adj)[1]
   max_edges <- (p^2 - p)
   tp <- sum(same_edges)
   tn <- sum(summ == 0) - p
   fp <- sum(diff == -1)
-  fn <- sum((same_edges - truth) == -1)
-  P <- sum(truth)
+  fn <- sum((same_edges - true_adj) == -1)
+  P <- sum(true_adj)
   N <- max_edges - P
-  EP <- sum(estimation)
+  EP <- sum(est_adj)
   EN <- max_edges - EP
   cm <- matrix(c(tp, fn, fp, tn), nrow = 2, byrow = TRUE,
                dimnames = list(c("True P", "True N"), c("Estim. P", "Estim. N")))
@@ -35,6 +80,89 @@ conf_matrix <- function(truth, estimation, margins = FALSE, normalize = FALSE,
   return(cm)
 }
 
+#' Performance scores for network estimation
+#' 
+#' This function calculates performance scores for network estimation. The scores are same as binary
+#' classification scores as the adjacency matrices are binary matrices.
+#' 
+#' @param cm The 2 by 2 confusion matrix calculated using the function \code{conf_matrix} from 
+#'   package GHSGEM, or manually created 2 by 2 matrix using following order:
+#'   \tabular{cc}{
+#'    \eqn{TP} \tab \eqn{FN}\cr
+#'    \eqn{FP} \tab \eqn{TN}
+#'   }
+#'
+#' @return
+#' A data frame, which contains following scores:
+#' \item{ACC}{
+#'    Accuracy, which is \eqn{(TP + TN) / (TP + TN + FN + FP)}.
+#' }
+#' \item{ACC_bal}{
+#'    Balanced accuracy, which is \eqn{(TPR + TNR) / 2}.
+#' }
+#' \item{MCC}{
+#'    Matthews correlation coefficient, which is \eqn{(TP \cdot TN - FP \cdot FN) / \sqrt{(TP + FP) (TP + FP) (TN + FP) (TN + FN)}}.
+#' }
+#' \item{F1}{
+#'    \eqn{F_1}-score, which is \eqn{2(PPV \cdot TPR) / (PPV + TPR)}.
+#' }
+#' \item{TPR}{
+#'    True positive rate (or recall or sensitivity), which is \eqn{TP / (TP + TN)}.
+#' }
+#' \item{TNR}{
+#'    True negative rate (or specificity or selectivity), which is \eqn{TN / (TN + FP)}.
+#' }
+#' \item{PPV}{
+#'    Positive predictive value (or precision), which is \eqn{TP / (TP + FP)}.
+#' }
+#' \item{NPV}{
+#'    Negative predictive value, which is \eqn{TN / (TN + FN)}.
+#' }
+#' \item{FPR}{
+#'    False positive rate (type I error), which is \eqn{1 - TNR}.
+#' }
+#' \item{FNR}{
+#'    False negative rate (type II error), which is \eqn{1 - TPR}.
+#' }
+#' \item{FDR}{
+#'    False discovery rate, which is \eqn{1 - PPV}.
+#' }
+#' \item{FOR}{
+#'    False omission rate, which is \eqn{1 - NPV}.
+#' }
+#' \item{PT}{
+#'    Prevalence threshold, which is \eqn{(\sqrt{TPR \cdot FPR} - FPR) / (TPR + FPR)}.
+#' }
+#' \item{TS}{
+#'    Threat score (or Jaccard index or critical success index (CSI)), which is \eqn{TP / (TP + FN + FP)}.
+#' }
+#' \item{FM}{
+#'    Fowlkes-Mallows index, which is \eqn{\sqrt{PPV + TPR}}.
+#' }
+#' \item{MK}{
+#'    Markedness, which is \eqn{PPV + NPV - 1}.
+#' }
+#' \item{LRp}{
+#'    Positive likelihood ratio, which is \eqn{TPR / FPR}.
+#' }
+#' \item{LRn}{
+#'    Negative likelihood ratio, which is \eqn{FNR / TNR}.
+#' }
+#' @export
+#'
+#' @examples
+#' true_adj <- matrix(c(0, 0, 1, 0, 0,
+#'                      0, 0, 1, 1, 0,
+#'                      1, 1, 0, 0, 0,
+#'                      0, 1, 0, 0, 1,
+#'                      0, 0, 0, 1, 0), 5, 5)
+#' est_adj <- matrix(c(0, 1, 1, 0, 0,
+#'                     1, 0, 0, 1, 0,
+#'                     1, 0, 0, 0, 1,
+#'                     0, 1, 0, 0, 1,
+#'                     0, 0, 1, 1, 0), 5, 5)
+#' cm <- conf_matrix(true_adj, est_adj)
+#' calculate_scores(cm)
 calculate_scores <- function(cm) {
   tp <- cm[1,1]
   tn <- cm[2,2]
@@ -50,7 +178,7 @@ calculate_scores <- function(cm) {
   FOR <- 1 - npv
   lr_plus <- tpr / fpr
   lr_neg <- fnr / tnr
-  pt <- sqrt(fpr) / (sqrt(tpr) + sqrt(fpr))
+  pt <- (sqrt(tpr * fpr) - fpr) / (tpr + fpr)
   ts <- tp / (tp + fn + fp)
   fm <- sqrt(ppv * tpr)
   mk <- ppv + npv - 1
