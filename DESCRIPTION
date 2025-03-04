@@ -12,6 +12,4 @@ License: GPL (>= 3)
 Encoding: UTF-8
 Imports: Rcpp (>= 1.0.13), matrixcalc
 LinkingTo: Rcpp, RcppArmadillo
-URL: https://github.com/THautamaki/GHSGEM
-BugReports: https://github.com/THautamaki/GHSGEM/issues
 RoxygenNote: 7.3.2
