@@ -7,11 +7,11 @@
 calculate_scores(cm)
 }
 \arguments{
-\item{cm}{The 2 by 2 confusion matrix calculated using the function \code{conf_matrix} from 
-package GHSGEM, or manually created 2 by 2 matrix using following order:
+\item{cm}{The 2 by 2 confusion matrix calculated using the function [conf_matrix()] or
+manually created 2 by 2 matrix using following order:
 \tabular{cc}{
- \eqn{TP} \tab \eqn{FN}\cr
- \eqn{FP} \tab \eqn{TN}
+   \eqn{TP} \tab \eqn{FN}\cr
+   \eqn{FP} \tab \eqn{TN}
 }}
 }
 \value{
@@ -72,8 +72,8 @@ A data frame, which contains following scores:
 }
 }
 \description{
-This function calculates several performance scores for network estimation. The scores are same
-as binary classification scores as the adjacency matrices are binary matrices.
+This function calculates performance scores for network estimation. The scores are same as binary
+classification scores as the adjacency matrices are binary matrices.
 }
 \examples{
 true_adj <- matrix(c(0, 0, 1, 0, 0,

@@ -1,13 +1,16 @@
-#' Steins' loss
+#' Stein's loss
 #'
 #' This function calculates Stein's loss between true and estimated positive-definite matrices,
 #' which equals two times the Kullback-Leibler divergence, and is defined as follows:
-#' \deqn{tr(\widehat{\mathbf{M}}\mathbf{M}^{-1}) - \log |\widehat{\mathbf{M}}\mathbf{M}^{-1}| - p}
+#' \deqn{\mathrm{tr}(\widehat{\mathbf{M}}\mathbf{M}^{-1}) - \log |\widehat{\mathbf{M}}\mathbf{M}^{-1}| - p}
 #' 
 #' @param true_matrix The true \code{p} by \code{p} covariance or precision matrix.
 #' @param est_matrix The estimate of the \code{p} by \code{p} covariance or precision matrix.
 #'
 #' @return Scalar, which is calculated Stein's loss between two matrices.
+#' @references James, W. and Stein, C. (1961). Estimation with quadratic loss. In \emph{Proceedings
+#'  of the Fourth Berkeley Symposium on Mathematical Statistics and Probability}, volume 1, pages
+#'  361--379. University of California Press.
 #' @export
 #'
 #' @examples
@@ -85,11 +88,11 @@ conf_matrix <- function(true_adj, est_adj, margins = FALSE, normalize = FALSE,
 #' This function calculates performance scores for network estimation. The scores are same as binary
 #' classification scores as the adjacency matrices are binary matrices.
 #' 
-#' @param cm The 2 by 2 confusion matrix calculated using the function \code{conf_matrix} from 
-#'   package GHSGEM, or manually created 2 by 2 matrix using following order:
+#' @param cm The 2 by 2 confusion matrix calculated using the function [conf_matrix()] or
+#'   manually created 2 by 2 matrix using following order:
 #'   \tabular{cc}{
-#'    \eqn{TP} \tab \eqn{FN}\cr
-#'    \eqn{FP} \tab \eqn{TN}
+#'      \eqn{TP} \tab \eqn{FN}\cr
+#'      \eqn{FP} \tab \eqn{TN}
 #'   }
 #'
 #' @return

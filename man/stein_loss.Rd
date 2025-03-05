@@ -2,7 +2,7 @@
 % Please edit documentation in R/Utils_for_network_estimation.R
 \name{stein_loss}
 \alias{stein_loss}
-\title{Steins' loss}
+\title{Stein's loss}
 \usage{
 stein_loss(true_matrix, est_matrix)
 }
@@ -17,10 +17,15 @@ Scalar, which is calculated Stein's loss between two matrices.
 \description{
 This function calculates Stein's loss between true and estimated positive-definite matrices,
 which equals two times the Kullback-Leibler divergence, and is defined as follows:
-\deqn{tr(\widehat{\mathbf{M}}\mathbf{M}^{-1}) - \log |\widehat{\mathbf{M}}\mathbf{M}^{-1}| - p}
+\deqn{\mathrm{tr}(\widehat{\mathbf{M}}\mathbf{M}^{-1}) - \log |\widehat{\mathbf{M}}\mathbf{M}^{-1}| - p}
 }
 \examples{
 m1 <- matrix(c(1,0,0,1), 2, 2)
 m2 <- matrix(c(0.8, 0, 0, 0.8), 2, 2)
 stein_loss(m1, m2)
+}
+\references{
+James, W. and Stein, C. (1961). Estimation with quadratic loss. In \emph{Proceedings
+ of the Fourth Berkeley Symposium on Mathematical Statistics and Probability}, volume 1, pages
+ 361--379. University of California Press.
 }
