@@ -7,7 +7,7 @@
 calculate_scores(cm)
 }
 \arguments{
-\item{cm}{The 2 by 2 confusion matrix calculated using the function [conf_matrix()] or
+\item{cm}{The 2 by 2 confusion matrix calculated using the function \code{conf_matrix()} or
 manually created 2 by 2 matrix using following order:
 \tabular{cc}{
    \eqn{TP} \tab \eqn{FN}\cr
@@ -53,13 +53,13 @@ A data frame, which contains following scores:
    False omission rate, which is \eqn{1 - NPV}.
 }
 \item{PT}{
-   Prevalence threshold, which is \eqn{(\sqrt{TPR \cdot FPR} - FPR) / (TPR + FPR)}.
+   Prevalence threshold, which is \eqn{(\sqrt{TPR \cdot FPR} - FPR) / (TPR - FPR)}.
 }
 \item{TS}{
    Threat score (or Jaccard index or critical success index (CSI)), which is \eqn{TP / (TP + FN + FP)}.
 }
 \item{FM}{
-   Fowlkes-Mallows index, which is \eqn{\sqrt{PPV + TPR}}.
+   Fowlkes-Mallows index, which is \eqn{\sqrt{PPV \cdot TPR}}.
 }
 \item{MK}{
    Markedness, which is \eqn{PPV + NPV - 1}.
@@ -88,4 +88,17 @@ est_adj <- matrix(c(0, 1, 1, 0, 0,
                     0, 0, 1, 1, 0), 5, 5)
 cm <- conf_matrix(true_adj, est_adj)
 calculate_scores(cm)
+}
+\references{
+Sammut, C., & Webb, G. I. (2017). \emph{Encyclopedia of machine learning and data mining.}
+ Springer Publishing Company, Incorporated.
+ 
+ Powers, D. M. (2020). Evaluation: from precision, recall and F-measure to ROC, informedness,
+ markedness and correlation. \emph{arXiv preprint arXiv:2010.16061.}
+ 
+ Chicco, D., & Jurman, G. (2020). The advantages of the Matthews correlation coefficient (MCC)
+ over F1 score and accuracy in binary classification evaluation. \emph{BMC genomics, 21,} 1-13.
+ 
+ Balayla, J. (2020). Prevalence threshold (\eqn{\phi e}) and the geometry of screening curves.
+ \emph{Plos one, 15}(10), e0240215.
 }
