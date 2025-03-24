@@ -73,12 +73,11 @@ GHS_MAP_estimation <- function(X, p0 = 0, tolerance = 1e-4, max_iterations = 500
   if (p0 == 0) {
     p0 <- p - 1
   }
-  if (p < 200) {
-    tau_f <- (p0/(p*(p-1)/2)) * (50 * sqrt(p0) / (n * sqrt(n)))
+  c <- p/5
+  if (p < 250) {
+    c <- 50
   }
-  else {
-    tau_f <- (p0/(p*(p-1)/2)) * ((p/4) * sqrt(p0) / (n * sqrt(n)))
-  }
+  tau_f <- (p0/(p*(p-1)/2)) * (c * sqrt(p0) / (n * sqrt(n)))
   if (use_Cpp) {
     GHSGEM_est <- graphical_horseshoe_map_Cpp(X, tol = tolerance, max_iter = max_iterations,
                                               fixed_tau = tau_f, verbose = verbose)
