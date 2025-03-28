@@ -5,6 +5,12 @@ This R package implements a generalized expectation-maximization
 algorithm with a graphical horseshoe prior for network, covariance
 matrix, and precision matrix (inverse of the covariance) estimation.
 
+The method is described in the article *Gene co-expression network 
+estimation using generalized expectation-maximization algorithm with
+graphical horseshoe prior*. All results can be reproduced using the 
+codes from the separate GitHub repository at 
+<https://github.com/THautamaki/GHSGEM_results>.
+
 ## Installation
 
 The GHSGEM package can be installed using the following code:
