@@ -41,7 +41,7 @@ List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau = 0, doubl
             vec s_12 = S(ind_noi, col_vec);
             double s_22 = S(i, i);
             // Calculate gamma, omega_12, omega_22, lambda_12^2 and delta_12
-            double gamma = (n / 2.0 + 1) / (s_22 / 2.0);
+            double gamma = (n / 2.0) / (s_22 / 2.0);
             mat Omega_11_inv = Sigma_11 - Sigma_12 * trans(Sigma_12) / Sigma_22;
             mat C_inv = s_22 * Omega_11_inv + diagmat(1.0 / (lambda_sq_12 * tau_sq));
 

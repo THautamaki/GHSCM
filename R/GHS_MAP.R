@@ -81,16 +81,16 @@ graphical_horseshoe_map <- function(X, fixed_tau = 0, tol = 1e-4, max_iter = 500
       s_12 <- S[ind_noi, i]
       s_22 <- S[i, i]
       # Calculate gamma, omega_12, omega_22, lambda_12^2 and delta_12.
-      gamma <- (n / 2 + 1) / (s_22 / 2)                # Use Mode instead of Mean. (n / 2 + 1) / (s_22 / 2)
+      gamma <- (n / 2) / (s_22 / 2)
       Omega_11_inv <- Sigma_11 - Sigma_12 %*% t(Sigma_12) / Sigma_22
       C_inv <- s_22 * Omega_11_inv + diag(1 / (lambda_sq_12 * tau_sq))
       beta <- -solve(C_inv, s_12)                  # Same as -C %*% s_12
       omega_12 <- beta
       omega_22 <- gamma + t(beta) %*% Omega_11_inv %*% beta
       lambda_scale <- 1 / delta_12 + omega_12^2 / (2 * tau_sq)
-      lambda_sq_12 <- lambda_scale / 2             # Use Mode instead of Mean.
+      lambda_sq_12 <- lambda_scale / 2
       delta_scale <- 1 + 1 / lambda_sq_12
-      delta_12 <- delta_scale / 2                        # Use Mode instead of Mean.
+      delta_12 <- delta_scale / 2
       # Update Omega, Sigma, Lambda^2 and Delta matrices.
       Omega[i, i] <- omega_22
       Omega[i, ind_noi] <- omega_12
