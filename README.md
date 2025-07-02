@@ -1,25 +1,23 @@
 
-# GHSGEM: Generalized expectation-maximization (GEM) algorithm with graphical horseshoe (GHS) prior for network estimation
+# GHSCM: Conditional maximization (CM) algorithm with graphical horseshoe (GHS) prior for network estimation
 
-This R package implements a generalized expectation-maximization
+This R package implements a conditional maximization
 algorithm with a graphical horseshoe prior for network, covariance
 matrix, and precision matrix (inverse of the covariance) estimation.
 
-The method is described in the article *Gene co-expression network 
-estimation using generalized expectation-maximization algorithm with
-graphical horseshoe prior*. All results can be reproduced using the 
+The method is described in the article *GHSCM: Efficient maximum a posteriori inference for biological networks with the graphical horseshoe prior*. All results can be reproduced using the 
 codes from the separate GitHub repository at 
-<https://github.com/THautamaki/GHSGEM_results>.
+<https://github.com/THautamaki/GHSCM_results>.
 
 ## Installation
 
-The GHSGEM package can be installed using the following code:
+The GHSCM package can be installed using the following code:
 
 ``` r
 if(!require("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-devtools::install_github("THautamaki/GHSGEM")
+devtools::install_github("THautamaki/GHSCM")
 ```
 
 ## Example of usage
@@ -32,7 +30,7 @@ if(!require("huge", quietly = TRUE)) {
   install.packages("huge")
 }
 
-library(GHSGEM)
+library(GHSCM)
 library(huge)
 
 n <- 200  # number of observations (sample size)
@@ -46,7 +44,7 @@ set.seed(20250303)
 sim <- huge.generator(n = n, d = p, graph = "scale-free")
 ```
 
-Run the GHS GEM algorithm.
+Run the GHS CM algorithm.
 
 ``` r
 map <- GHS_MAP_estimation(sim$data, verbose = 0)
