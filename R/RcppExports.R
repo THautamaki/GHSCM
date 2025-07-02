@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 graphical_horseshoe_map_Cpp <- function(X, fixed_tau = 0, tol = 1e-4, max_iter = 500L, diff_type = "relative", verbose = 1L) {
-    .Call(`_GHSGEM_graphical_horseshoe_map_Cpp`, X, fixed_tau, tol, max_iter, diff_type, verbose)
+    .Call(`_GHSCM_graphical_horseshoe_map_Cpp`, X, fixed_tau, tol, max_iter, diff_type, verbose)
 }
 

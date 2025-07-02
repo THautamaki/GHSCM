@@ -1,30 +1,30 @@
-\name{GHSGEM-package}
-\alias{GHSGEM-package}
-\alias{GHSGEM}
+\name{GHSCM-package}
+\alias{GHSCM-package}
+\alias{GHSCM}
 \docType{package}
 \title{
-\packageTitle{GHSGEM}
+\packageTitle{GHSCM}
 }
 \description{
-\packageDescription{GHSGEM}
+\packageDescription{GHSCM}
 }
 \details{
 %%  ~~ An overview of how to use the package, ~~
 %%  ~~ including the most important functions ~~
 }
 \author{
-\packageAuthor{GHSGEM}
+\packageAuthor{GHSCM}
 
-Maintainer: \packageMaintainer{GHSGEM}
+Maintainer: \packageMaintainer{GHSCM}
 }
 \references{
 %%  ~~ Literature or other references for background information ~~
 }
 \keyword{package}
 
-%% Uncomment below to imitate parts of library(help = GHSGEM)
-%\section{The \file{DESCRIPTION} File}{\packageDESCRIPTION{GHSGEM}}
-%\section{Documentation Index}{\packageIndices{GHSGEM}}
+%% Uncomment below to imitate parts of library(help = GHSCM)
+%\section{The \file{DESCRIPTION} File}{\packageDESCRIPTION{GHSCM}}
+%\section{Documentation Index}{\packageIndices{GHSCM}}
 
 \seealso{
 %%  ~~ Optional links to other man pages, e.g. ~~

@@ -13,7 +13,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // graphical_horseshoe_map_Cpp
 List graphical_horseshoe_map_Cpp(const arma::mat& X, double fixed_tau, double tol, int max_iter, const std::string& diff_type, int verbose);
-RcppExport SEXP _GHSGEM_graphical_horseshoe_map_Cpp(SEXP XSEXP, SEXP fixed_tauSEXP, SEXP tolSEXP, SEXP max_iterSEXP, SEXP diff_typeSEXP, SEXP verboseSEXP) {
+RcppExport SEXP _GHSCM_graphical_horseshoe_map_Cpp(SEXP XSEXP, SEXP fixed_tauSEXP, SEXP tolSEXP, SEXP max_iterSEXP, SEXP diff_typeSEXP, SEXP verboseSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -29,11 +29,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_GHSGEM_graphical_horseshoe_map_Cpp", (DL_FUNC) &_GHSGEM_graphical_horseshoe_map_Cpp, 6},
+    {"_GHSCM_graphical_horseshoe_map_Cpp", (DL_FUNC) &_GHSCM_graphical_horseshoe_map_Cpp, 6},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_GHSGEM(DllInfo *dll) {
+RcppExport void R_init_GHSCM(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
