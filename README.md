@@ -6,7 +6,7 @@ graphical horseshoe prior for network, covariance matrix, and precision
 matrix (inverse of the covariance) estimation.
 
 The method is described in the article *GHSCM: Efficient maximum a
-posteriori inference for biological networks with the graphical
+posteriori inference for gene co-expression networks with the graphical
 horseshoe prior*. All results can be reproduced using the codes from the
 separate GitHub repository at
 <https://github.com/THautamaki/GHSCM_results>.
@@ -52,7 +52,7 @@ Run the GHS CM algorithm.
 map <- GHS_MAP_estimation(sim$data, verbose = 0)
 ```
 
-    ## Total iterations: 75. Elapsed time: 1.08782 s. Final difference: 9.78603e-05
+    ## Total iterations: 75. Elapsed time: 1.12854 s. Final difference: 9.78603e-05
 
 Calculate and print the confusion matrix.
 
