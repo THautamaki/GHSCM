@@ -1,12 +1,12 @@
 
-# GHSCM: Conditional maximization (CM) algorithm with graphical horseshoe (GHS) prior for network estimation
+# GHSCM: Conditional maximization (CM) algorithm with the graphical horseshoe (GHS) prior for network estimation
 
-This R package implements a conditional maximization algorithm with a
+This R package implements a conditional maximization algorithm with the
 graphical horseshoe prior for network, covariance matrix, and precision
 matrix (inverse of the covariance) estimation.
 
 The method is described in the article *GHSCM: Efficient maximum a
-posteriori inference for gene co-expression networks with the graphical
+posteriori inference for biological networks with the graphical
 horseshoe prior*. All results can be reproduced using the codes from the
 separate GitHub repository at
 <https://github.com/THautamaki/GHSCM_results>.
@@ -52,7 +52,7 @@ Run the GHS CM algorithm.
 map <- GHS_MAP_estimation(sim$data, verbose = 0)
 ```
 
-    ## Total iterations: 75. Elapsed time: 1.12854 s. Final difference: 9.78603e-05
+    ## Total iterations: 75. Elapsed time: 1.08965 s. Final difference: 9.78603e-05
 
 Calculate and print the confusion matrix.
 
