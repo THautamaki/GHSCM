@@ -143,9 +143,9 @@ graphical_horseshoe_map <- function(X, fixed_tau = 0, tol = 1e-4, max_iter = 500
   theta[theta >= 0.5] <- 1
   theta[theta < 0.5] <- 0
   diag(theta) <- 0
+  end_time <- Sys.time()
+  elap_time <- as.numeric(difftime(end_time, start_time, unit = "s"))
   if (verbose >= 0) {
-    end_time <- Sys.time()
-    elap_time <- as.numeric(difftime(end_time, start_time, unit = "s"))
     cat("Total iterations: ", iter - 1, ". Elapsed time: ", round(elap_time, 2),
         " s. Final difference: ", diff, "\n", sep = "")
   }
