@@ -7,8 +7,8 @@
 #'
 #' @param X The data matrix with dimensions \code{n} by \code{p}, where \code{n} = sample size and
 #'   \code{p} = number of variables.
-#' @param p0 A prior assumption of number of connections in the network. The default values is 0,
-#'   which means that p - 1 is used.
+#' @param p0 A prior assumption of number of connections in the network. Must be positive value.
+#'   The default values is 0, which means that p - 1 is used (a scale-free network sparseness).
 #' @param tolerance Convergence tolerance of the algorithm. The default value is 1e-4.
 #' @param max_iterations Maximum iterations of the algorithm, if convergence tolerance is not
 #'   reached. The default value is 500 iterations.
@@ -72,6 +72,9 @@ GHS_MAP_estimation <- function(X, p0 = 0, tolerance = 1e-4, max_iterations = 500
   p <- ncol(X)
   if (p0 == 0) {
     p0 <- p - 1
+  }
+  if (p0 < 0) {
+    stop("p0 must be positive!")
   }
   c <- p/5
   if (p < 250) {
