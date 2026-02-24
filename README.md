@@ -7,9 +7,24 @@ matrix (inverse of the covariance) estimation.
 
 The method is described in the article *GHSCM: Efficient maximum a
 posteriori inference for biological networks with the graphical
-horseshoe prior*. All results can be reproduced using the codes from the
-separate GitHub repository at
+horseshoe prior* published in *Information Sciences*
+<https://doi.org/10.1016/j.ins.2026.123257>. All results can be
+reproduced using the codes from the separate GitHub repository at
 <https://github.com/THautamaki/GHSCM_results>.
+
+If you want to cite the package, use the following citation:
+
+    @article{HAUTAMAKI2026123257,
+      title = {GHSCM: Efficient maximum a posteriori inference for biological networks with the graphical horseshoe prior},
+      journal = {Information Sciences},
+      volume = {741},
+      pages = {123257},
+      year = {2026},
+      issn = {0020-0255},
+      doi = {https://doi.org/10.1016/j.ins.2026.123257},
+      url = {https://www.sciencedirect.com/science/article/pii/S002002552600188X},
+      author = {Tuomas Hautamäki and Aapo E. Korhonen and Olli Sarala and Markku Kuismin and Mikko J. Sillanpää},
+    }
 
 ## Installation
 
@@ -52,7 +67,7 @@ Run the GHS CM algorithm.
 map <- GHS_MAP_estimation(sim$data, verbose = 0)
 ```
 
-    ## Total iterations: 75. Elapsed time: 1.08965 s. Final difference: 9.78603e-05
+    ## Total iterations: 75. Elapsed time: 1.12601 s. Final difference: 9.78603e-05
 
 Calculate and print the confusion matrix.
 

@@ -10,7 +10,23 @@ knitr::opts_chunk$set(echo = TRUE, fig.path = "man/figures/README-", out.width =
 
 This R package implements a conditional maximization algorithm with the graphical horseshoe prior for network, covariance matrix, and precision matrix (inverse of the covariance) estimation.
 
-The method is described in the article *GHSCM: Efficient maximum a posteriori inference for biological networks with the graphical horseshoe prior*. All results can be reproduced using the codes from the separate GitHub repository at <https://github.com/THautamaki/GHSCM_results>.
+The method is described in the article *GHSCM: Efficient maximum a posteriori inference for biological networks with the graphical horseshoe prior* published in *Information Sciences* <https://doi.org/10.1016/j.ins.2026.123257>. All results can be reproduced using the codes from the separate GitHub repository at <https://github.com/THautamaki/GHSCM_results>.
+
+If you want to cite the package, use the following citation:
+
+```
+@article{HAUTAMAKI2026123257,
+  title = {GHSCM: Efficient maximum a posteriori inference for biological networks with the graphical horseshoe prior},
+  journal = {Information Sciences},
+  volume = {741},
+  pages = {123257},
+  year = {2026},
+  issn = {0020-0255},
+  doi = {https://doi.org/10.1016/j.ins.2026.123257},
+  url = {https://www.sciencedirect.com/science/article/pii/S002002552600188X},
+  author = {Tuomas Hautamäki and Aapo E. Korhonen and Olli Sarala and Markku Kuismin and Mikko J. Sillanpää},
+}
+```
 
 ## Installation
 
