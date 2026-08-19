@@ -8,6 +8,6 @@ Maintainer: Tuomas Hautamaki <tuomas.hautamaki@oulu.fi>
 Description: This R package implements a conditional maximization algorithm with a graphical horseshoe prior for network, covariance matrix, and precision matrix (inverse of the covariance) estimation.
 License: GPL (>= 3)
 Encoding: UTF-8
-Imports: Rcpp (>= 1.0.13), matrixcalc
+Imports: Rcpp, matrixcalc
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.3.2
